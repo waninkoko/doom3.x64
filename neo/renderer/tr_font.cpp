@@ -344,8 +344,8 @@ bool idRenderSystemLocal::RegisterFont( const char *fontName, fontInfoEx_t &font
 		idStr::Copynz( outFont->name, name, sizeof( outFont->name ) );
 
 		len = fileSystem->ReadFile( name, NULL, &ftime );
-		if ( len != sizeof( fontInfo_t ) ) {
-			common->Warning( "RegisterFont: couldn't find font: '%s'", name );
+		if ( len == 0 ) {
+			common->Warning( "RegisterFont: couldn't find font: '%s' (%d)", name );
 			return false;
 		}
 
