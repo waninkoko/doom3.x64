@@ -57,7 +57,7 @@ struct idEventFunc {
 class idEventArg {
 public:
 	int			type;
-	int			value;
+	size_t			value;
 
 	idEventArg()								{ type = D_EVENT_INTEGER; value = 0; };
 	idEventArg( int data )						{ type = D_EVENT_INTEGER; value = data; };
