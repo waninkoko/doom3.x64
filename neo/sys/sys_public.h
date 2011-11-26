@@ -331,7 +331,7 @@ const char *	Sys_GetCallStackCurAddressStr( int depth );
 void			Sys_ShutdownSymbols( void );
 
 // DLL loading, the path should be a fully qualified OS path to the DLL file to be loaded
-int				Sys_DLL_Load( const char *dllName );
+size_t				Sys_DLL_Load( const char *dllName );
 void *			Sys_DLL_GetProcAddress( int dllHandle, const char *procName );
 void			Sys_DLL_Unload( int dllHandle );
 
