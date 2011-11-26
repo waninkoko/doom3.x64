@@ -247,7 +247,7 @@ static void LoadBMP( const char *name, byte **pic, int *width, int *height, ID_T
 	int		row, column;
 	byte	*buf_p;
 	byte	*buffer;
-	int		length;
+	unsigned int		length;
 	BMPHeader_t bmpHeader;
 	byte		*bmpRGBA;
 

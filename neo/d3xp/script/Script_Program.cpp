@@ -918,7 +918,7 @@ idScriptObject::Restore
 */
 void idScriptObject::Restore( idRestoreGame *savefile ) {
 	idStr typeName;
-	size_t size;
+	int size;
 
 	savefile->ReadString( typeName );
 
@@ -1319,7 +1319,7 @@ idVarDef *idProgram::AllocDef( idTypeDef *type, const char *name, idVarDef *scop
 		//
 		def->value.bytePtr = &variables[ numVariables ];
 		numVariables += def->TypeDef()->Size();
-		if ( numVariables > sizeof( variables ) ) {
+		if ( (unsigned int)numVariables > sizeof( variables ) ) {
 			throw idCompileError( va( "Exceeded global memory size (%zu bytes)", sizeof( variables ) ) );
 		}
 

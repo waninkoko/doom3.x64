@@ -213,7 +213,7 @@ public:
 
 	// data commonly accessed is grouped here
 	static const int TEXTURE_NOT_LOADED = -1;
-	GLuint				texnum;					// gl texture binding, will be TEXTURE_NOT_LOADED if not loaded
+	GLint				texnum;					// gl texture binding, will be TEXTURE_NOT_LOADED if not loaded
 	textureType_t		type;
 	int					frameUsed;				// for texture usage in frame statistics
 	int					bindCount;				// incremented each bind

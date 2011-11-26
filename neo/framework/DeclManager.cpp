@@ -360,7 +360,7 @@ BuildHuffmanCode_r
 void BuildHuffmanCode_r( huffmanNode_t *node, huffmanCode_t code, huffmanCode_t codes[MAX_HUFFMAN_SYMBOLS] ) {
 	if ( node->symbol == -1 ) {
 		huffmanCode_t newCode = code;
-		assert( code.numBits < sizeof( codes[0].bits ) * 8 );
+		assert( (size_t)code.numBits < sizeof( codes[0].bits ) * 8 );
 		newCode.numBits++;
 		if ( code.numBits > maxHuffmanBits ) {
 			maxHuffmanBits = newCode.numBits;
@@ -369,7 +369,7 @@ void BuildHuffmanCode_r( huffmanNode_t *node, huffmanCode_t code, huffmanCode_t 
 		newCode.bits[code.numBits >> 5] |= 1 << ( code.numBits & 31 );
 		BuildHuffmanCode_r( node->children[1], newCode, codes );
 	} else {
-		assert( code.numBits <= sizeof( codes[0].bits ) * 8 );
+		assert( (size_t)code.numBits <= sizeof( codes[0].bits ) * 8 );
 		codes[node->symbol] = code;
 	}
 }
@@ -1975,7 +1975,7 @@ bool idDeclLocal::ReplaceSourceFileText( void ) {
 		file->Read( buffer, oldFileLength );
 		fileSystem->CloseFile( file );
 
-		if ( MD5_BlockChecksum( buffer, oldFileLength ) != sourceFile->checksum ) {
+		if ( MD5_BlockChecksum( buffer, oldFileLength ) != (unsigned int)sourceFile->checksum ) {
 			Mem_Free( buffer );
 			common->Warning( "The file %s has been modified outside of the engine.", GetFileName() );
 			return false;

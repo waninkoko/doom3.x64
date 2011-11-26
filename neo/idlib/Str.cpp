@@ -1470,7 +1470,7 @@ int idStr::snPrintf( char *dest, int size, const char *fmt, ...) {
 	va_start( argptr, fmt );
 	len = vsprintf( buffer, fmt, argptr );
 	va_end( argptr );
-	if ( len >= sizeof( buffer ) ) {
+	if ( (unsigned int)len >= sizeof( buffer ) ) {
 		idLib::common->Error( "idStr::snPrintf: overflowed buffer" );
 	}
 	if ( len >= size ) {

@@ -1800,7 +1800,7 @@ void idImage::StartBackgroundImageLoad() {
 	}
 	bgl.file.position = 0;
 	bgl.file.length = bgl.f->Length();
-	if ( bgl.file.length < sizeof( ddsFileHeader_t ) ) {
+	if ( (unsigned int)bgl.file.length < sizeof( ddsFileHeader_t ) ) {
 		common->Warning( "idImageManager::StartBackgroundImageLoad: %s had a bad file length", imgName.c_str() );
 		return;
 	}
