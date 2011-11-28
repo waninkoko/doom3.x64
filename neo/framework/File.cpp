@@ -305,6 +305,28 @@ int idFile::WriteFloatString( const char *fmt, ... ) {
 
 /*
  =================
+ idFile::ReadLong
+ =================
+ */
+int idFile::ReadLong( ssize_t &value ) {
+	int result = Read( &value, sizeof( value ) );
+	LittleRevBytes( &value, sizeof(value), 1 );
+	return result;
+}
+
+/*
+ =================
+ idFile::ReadUnsignedLong
+ =================
+ */
+int idFile::ReadUnsignedLong( size_t &value ) {
+	int result = Read( &value, sizeof( value ) );
+	LittleRevBytes( &value, sizeof(value), 1 );
+	return result;
+}
+
+/*
+ =================
  idFile::ReadInt
  =================
  */
@@ -462,6 +484,28 @@ int idFile::ReadMat3( idMat3 &mat ) {
 
 /*
  =================
+ idFile::WriteLong
+ =================
+ */
+int idFile::WriteLong( const ssize_t value ) {
+	ssize_t v = value;
+	LittleRevBytes( &v, sizeof(v), 1 );
+	return Write( &v, sizeof( v ) );
+}
+
+/*
+ =================
+ idFile::WriteUnsignedLong
+ =================
+ */
+int idFile::WriteUnsignedLong( const size_t value ) {
+	size_t v = value;
+	LittleRevBytes( &v, sizeof(v), 1 );
+	return Write( &v, sizeof( v ) );
+}
+
+/*
+ =================
  idFile::WriteInt
  =================
  */
@@ -548,7 +592,7 @@ int idFile::WriteString( const char *value ) {
 	
 	len = strlen( value );
 	WriteInt( len );
-    return Write( value, len );
+	return Write( value, len );
 }
 
 /*

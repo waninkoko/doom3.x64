@@ -1197,10 +1197,10 @@ void idSoundWorldLocal::WriteToSaveGameSoundChannel( idFile *saveGame, idSoundCh
 	saveGame->WriteInt( ch->trigger44kHzTime );
 	saveGame->WriteInt( ch->triggerGame44kHzTime );
 	WriteToSaveGameSoundShaderParams( saveGame, &ch->parms );
-	saveGame->Write( (size_t)ch->leadinSample, sizeof(size_t) );
+	saveGame->WriteUnsignedLong( (size_t)ch->leadinSample );
 	saveGame->WriteInt( ch->triggerChannel );
-	saveGame->Write( (size_t)ch->soundShader, sizeof(size_t) );
-	saveGame->Write( (size_t)ch->decoder, sizeof(size_t) );
+	saveGame->WriteUnsignedLong( (size_t)ch->soundShader );
+	saveGame->WriteUnsignedLong( (size_t)ch->decoder );
 	saveGame->WriteFloat(ch->diversity );
 	saveGame->WriteFloat(ch->lastVolume );
 	for (int m = 0; m < 6; m++)
@@ -1368,10 +1368,10 @@ void idSoundWorldLocal::ReadFromSaveGameSoundChannel( idFile *saveGame, idSoundC
 	saveGame->ReadInt( ch->trigger44kHzTime );
 	saveGame->ReadInt( ch->triggerGame44kHzTime );
 	ReadFromSaveGameSoundShaderParams( saveGame, &ch->parms );
-	saveGame->ReadInt( (int&)ch->leadinSample );
+	saveGame->ReadUnsignedLong( (size_t&)ch->leadinSample );
 	saveGame->ReadInt( ch->triggerChannel );
-	saveGame->ReadInt( (int&)ch->soundShader );
-	saveGame->ReadInt( (int&)ch->decoder );
+	saveGame->ReadUnsignedLong( (size_t&)ch->soundShader );
+	saveGame->ReadUnsignedLong( (size_t&)ch->decoder );
 	saveGame->ReadFloat(ch->diversity );
 	saveGame->ReadFloat(ch->lastVolume );
 	for (int m = 0; m < 6; m++)

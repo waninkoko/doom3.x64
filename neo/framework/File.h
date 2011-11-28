@@ -80,6 +80,8 @@ public:
 	virtual int				WriteFloatString( const char *fmt, ... ) id_attribute((format(printf,2,3)));
 	
 	// Endian portable alternatives to Read(...)
+	virtual int				ReadLong( ssize_t &value );
+	virtual int				ReadUnsignedLong( size_t &value );
 	virtual int				ReadInt( int &value );
 	virtual int				ReadUnsignedInt( unsigned int &value );
 	virtual int				ReadShort( short &value );
@@ -96,6 +98,8 @@ public:
 	virtual int				ReadMat3( idMat3 &mat );
 	
 	// Endian portable alternatives to Write(...)
+	virtual int				WriteLong( const ssize_t value );
+	virtual int				WriteUnsignedLong( const size_t value );
 	virtual int				WriteInt( const int value );
 	virtual int				WriteUnsignedInt( const unsigned int value );
 	virtual int				WriteShort( const short value );
