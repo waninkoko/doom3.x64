@@ -918,7 +918,7 @@ idScriptObject::Restore
 */
 void idScriptObject::Restore( idRestoreGame *savefile ) {
 	idStr typeName;
-	int size;
+	size_t size;
 
 	savefile->ReadString( typeName );
 
@@ -1323,7 +1323,7 @@ idVarDef *idProgram::AllocDef( idTypeDef *type, const char *name, idVarDef *scop
 		//
 		def->value.bytePtr = &variables[ numVariables ];
 		numVariables += def->TypeDef()->Size();
-		if ( (unsigned int)numVariables > sizeof( variables ) ) {
+		if ( numVariables > sizeof( variables ) ) {
 			throw idCompileError( va( "Exceeded global memory size (%zu bytes)", sizeof( variables ) ) );
 		}
 
@@ -1722,7 +1722,6 @@ called after all files are compiled to report memory usage.
 void idProgram::CompileStats( void ) {
 	int	memused;
 	int	memallocated;
-	int	numdefs;
 	int	stringspace;
 	int funcMem;
 	int	i;
@@ -1737,7 +1736,6 @@ void idProgram::CompileStats( void ) {
 	}
 	stringspace += fileList.Size();
 
-	numdefs = varDefs.Num();
 	memused = varDefs.Num() * sizeof( idVarDef );
 	memused += types.Num() * sizeof( idTypeDef );
 	memused += stringspace;

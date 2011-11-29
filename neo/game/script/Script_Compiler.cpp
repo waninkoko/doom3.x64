@@ -38,7 +38,7 @@ If you have questions concerning this license or the applicable additional terms
 #define TOP_PRIORITY		7
 
 bool idCompiler::punctuationValid[ 256 ];
-char *idCompiler::punctuation[] = {
+const char *idCompiler::punctuation[] = {
 	"+=", "-=", "*=", "/=", "%=", "&=", "|=", "++", "--",
 	"&&", "||", "<=", ">=", "==", "!=", "::", ";",  ",",
 	"~",  "!",  "*",  "/",  "%",  "(",   ")",  "-", "+",
@@ -207,7 +207,7 @@ idCompiler::idCompiler()
 ================
 */
 idCompiler::idCompiler() {
-	char	**ptr;
+	const char	**ptr;
 	int		id;
 
 	// make sure we have the right # of opcodes in the table
@@ -960,8 +960,8 @@ idVarDef *idCompiler::EmitFunctionParms( int op, idVarDef *func, int startarg, i
 				Error( "type mismatch on parm %i of call to '%s'", arg + 1, func->Name() );
 			}
 
-			if ( funcArg->Type() == ev_object ) {
-				size += type_object.Size();
+			if ( funcArg->Type() == ev_object or funcArg->Type() == ev_entity) {
+				size += sizeof(int);
 			} else {
 				size += funcArg->Size();
 			}
@@ -2010,7 +2010,6 @@ void idCompiler::ParseObjectDef( const char *objname ) {
 	const char  *fieldname;
 	idTypeDef	newtype( ev_field, NULL, "", 0, NULL );
 	idVarDef	*oldscope;
-	int			num;
 	int			i;
 
 	oldscope = scope;
@@ -2038,7 +2037,6 @@ void idCompiler::ParseObjectDef( const char *objname ) {
 	scope = objtype->def;
 
 	// inherit all the functions
-	num = parentType->NumFunctions();
 	for( i = 0; i < parentType->NumFunctions(); i++ ) {
 		const function_t *func = parentType->GetFunction( i );
 		objtype->AddFunction( func );
@@ -2115,7 +2113,6 @@ idCompiler::ParseFunctionDef
 void idCompiler::ParseFunctionDef( idTypeDef *returnType, const char *name ) {
 	idTypeDef		*type;
 	idVarDef		*def;
-	const idVarDef	*parm;
 	idVarDef		*oldscope;
 	int 			i;
 	int 			numParms;
@@ -2171,7 +2168,7 @@ void idCompiler::ParseFunctionDef( idTypeDef *returnType, const char *name ) {
 		if ( gameLocal.program.GetDef( type->GetParmType( i ), type->GetParmName( i ), def ) ) {
 			Error( "'%s' defined more than once in function parameters", type->GetParmName( i ) );
 		}
-		parm = gameLocal.program.AllocDef( type->GetParmType( i ), type->GetParmName( i ), def, false );
+		gameLocal.program.AllocDef( type->GetParmType( i ), type->GetParmName( i ), def, false );
 	}
 
 	oldscope = scope;
